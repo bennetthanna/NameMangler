@@ -20,22 +20,28 @@ public class MangledNameActivity extends AppCompatActivity {
     private Button mRemangleButton;
     private TextView mMangledName;
     private String mInputtedName;
-    public static final String EXTRA_REMANGLE = "Remangle name";
+    private String mSavedString;
+    public static final String MANGLED_NAME_KEY = "Mangled name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mangled_name);
 
-        Intent intent = getIntent();
-        mInputtedName = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-
         mResetButton = (Button) findViewById(R.id.reset_button);
         mRemangleButton = (Button) findViewById(R.id.remangle_button);
         mMangledName = (TextView) findViewById(R.id.mangled_name);
 
-        mangleName();
+        Intent intent = getIntent();
+        mInputtedName = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
+        if (savedInstanceState != null) {
+            mSavedString = savedInstanceState.getString(MANGLED_NAME_KEY);
+            mMangledName.setText(mSavedString);
+        } else {
+            mangleName();
+        }
+        
         mResetButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -59,5 +65,10 @@ public class MangledNameActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(MANGLED_NAME_KEY, mMangledName.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
 
 }
