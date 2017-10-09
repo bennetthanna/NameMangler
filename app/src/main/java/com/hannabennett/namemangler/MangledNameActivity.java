@@ -27,7 +27,6 @@ public class MangledNameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mangled_name);
 
-        // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         mInputtedName = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
@@ -46,7 +45,7 @@ public class MangledNameActivity extends AppCompatActivity {
 
         mRemangleButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                remangleName();
+                mangleName();
             }
         });
     }
@@ -60,14 +59,5 @@ public class MangledNameActivity extends AppCompatActivity {
 
     }
 
-    public void remangleName() {
-        Intent intent = new Intent(getApplicationContext(), MangledNameActivity.class);
-        Resources res = getResources();
-        String[] random_names = res.getStringArray(R.array.random_names_array);
-        int index = new Random().nextInt(5) % 5;
-        String mangledName = mInputtedName + " " + random_names[index].toString();
-        intent.putExtra(EXTRA_REMANGLE, mangledName);
-        startActivity(intent);
-    }
 
 }
