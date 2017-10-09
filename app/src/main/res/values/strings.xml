@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">NameMangler</string>
+    <string name="title">Name Mangler</string>
     <string name="first_name">First name:</string>
     <string name="mangle_button">Mangle!</string>
     <string name="empty_string_toast">You must enter a name</string>
