@@ -1,25 +1,18 @@
 package com.hannabennett.namemangler;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Random;
-
-import static android.R.attr.name;
-
 public class MainActivity extends AppCompatActivity {
 
     private Button mMangleButton;
     private EditText mFirstNameInput;
-    private static final String TAG = "MainActivity";
-    public static final String EXTRA_MESSAGE = "Name";
+    public static final String EXTRA_INPUTTED_NAME = "Name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +25,14 @@ public class MainActivity extends AppCompatActivity {
 
         mMangleButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d(TAG, "name = " + mFirstNameInput.getText());
                 String name = mFirstNameInput.getText().toString();
                 if (name.isEmpty()) {
-                    Toast empty_name_toast = Toast.makeText(getApplicationContext(),
+                    Toast.makeText(getApplicationContext(),
                             "You must enter a name",
-                            Toast.LENGTH_SHORT);
-                    empty_name_toast.show();
+                            Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), MangledNameActivity.class);
-                    intent.putExtra(EXTRA_MESSAGE, name);
+                    intent.putExtra(EXTRA_INPUTTED_NAME, name);
                     startActivity(intent);
                 }
             }

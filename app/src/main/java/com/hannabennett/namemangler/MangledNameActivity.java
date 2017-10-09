@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.Random;
 
 /**
@@ -33,7 +31,7 @@ public class MangledNameActivity extends AppCompatActivity {
         mMangledName = (TextView) findViewById(R.id.mangled_name);
 
         Intent intent = getIntent();
-        mInputtedName = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        mInputtedName = intent.getStringExtra(MainActivity.EXTRA_INPUTTED_NAME);
 
         if (savedInstanceState != null) {
             mSavedString = savedInstanceState.getString(MANGLED_NAME_KEY);
@@ -59,7 +57,7 @@ public class MangledNameActivity extends AppCompatActivity {
     public void mangleName() {
         Resources res = getResources();
         String[] random_names = res.getStringArray(R.array.random_names_array);
-        int index = new Random().nextInt(5) % 5;
+        int index = new Random().nextInt(random_names.length);
         String mangledName = mInputtedName + " " + random_names[index].toString();
         mMangledName.setText(mangledName);
 
