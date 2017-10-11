@@ -1,13 +1,11 @@
 package com.hannabennett.namemangler;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import java.util.Random;
 
 /**
  * Created by HannaBennett on 10/9/17.
@@ -18,8 +16,8 @@ public class MangledNameActivity extends AppCompatActivity {
     private Button mRemangleButton;
     private TextView mMangledName;
     private String mInputtedName;
-    private String mSavedString;
     public static final String MANGLED_NAME_KEY = "Mangled name";
+    private NameMangler mNameMangler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +32,10 @@ public class MangledNameActivity extends AppCompatActivity {
         mInputtedName = intent.getStringExtra(MainActivity.EXTRA_INPUTTED_NAME);
 
         if (savedInstanceState != null) {
-            mSavedString = savedInstanceState.getString(MANGLED_NAME_KEY);
-            mMangledName.setText(mSavedString);
+            mMangledName.setText(savedInstanceState.getString(MANGLED_NAME_KEY));
         } else {
-            mangleName();
+            mNameMangler = new NameMangler(mInputtedName, getLastNames());
+            mMangledName.setText(mNameMangler.getMangledName());
         }
         
         mResetButton.setOnClickListener(new View.OnClickListener() {
@@ -49,18 +47,14 @@ public class MangledNameActivity extends AppCompatActivity {
 
         mRemangleButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mangleName();
+                mNameMangler = new NameMangler(mInputtedName, getLastNames());
+                mMangledName.setText(mNameMangler.getMangledName());
             }
         });
     }
 
-    public void mangleName() {
-        Resources res = getResources();
-        String[] random_names = res.getStringArray(R.array.random_names_array);
-        int index = new Random().nextInt(random_names.length);
-        String mangledName = mInputtedName + " " + random_names[index].toString();
-        mMangledName.setText(mangledName);
-
+    public String[] getLastNames() {
+        return getResources().getStringArray(R.array.random_names_array);
     }
 
     @Override
